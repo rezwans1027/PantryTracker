@@ -34,7 +34,7 @@ export default function AddItemForm({ update, itemList }) {
         await update();
         setError(null);
         handleClose();
-        localStorage.removeItem("inventoryList");
+        // localStorage.removeItem("inventoryList");
     }
   };
 
