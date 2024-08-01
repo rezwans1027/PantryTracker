@@ -8,13 +8,33 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
+  Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import NumberInput from "./NumberInput";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { firestore } from "../firebase/firebase";
 
-export default function AddItemForm() {
-  const [open, setOpen] = React.useState(false);
-  const [quantity, setQuantity] = React.useState<number | null>(1);
+export default function AddItemForm({ update, itemList }) {
+  const [open, setOpen] = useState(false);
+  const [quantity, setQuantity] = useState<number | null>(1);
+  const [error, setError] = useState<string | null>(null);
+
+  const itemNameList = itemList.map(item => item.name);
+
+  const addItem = async (item, amount) => {
+    const docRef = doc(collection(firestore, "items"), item);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      // If the item already exists, don't add
+      setError(`The item "${item}" already exists in the inventory.`);
+    } else {
+      await setDoc(docRef, { quantity: amount });
+      await update();
+      setError(null);
+      handleClose();
+    }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,6 +42,7 @@ export default function AddItemForm() {
 
   const handleClose = () => {
     setOpen(false);
+    setError(null);
   };
 
   return (
@@ -40,8 +61,12 @@ export default function AddItemForm() {
             const formJson = Object.fromEntries((formData as any).entries());
             const itemName = formJson.itemName;
             const itemQuantity = quantity;
-            console.log({ itemName, itemQuantity });
-            handleClose();
+
+            if (itemNameList.includes(itemName)) {
+              setError(`The item "${itemName}" already exists in the inventory.`);
+            } else {
+              addItem(itemName, itemQuantity);
+            }
           },
         }}
       >
@@ -72,6 +97,11 @@ export default function AddItemForm() {
             onChange={(event, val) => setQuantity(Math.max(1, val))}
             min={1}
           />
+          {error && (
+            <Typography color="error" className="mt-4">
+              {error}
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
