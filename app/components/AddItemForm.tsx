@@ -29,10 +29,12 @@ export default function AddItemForm({ update, itemList }) {
       // If the item already exists, don't add
       setError(`The item "${item}" already exists in the inventory.`);
     } else {
-      await setDoc(docRef, { quantity: amount });
-      await update();
-      setError(null);
-      handleClose();
+        const dateCreated = new Date().toISOString();
+        await setDoc(docRef, { name: item, quantity: amount, dateCreated });
+        await update();
+        setError(null);
+        handleClose();
+        localStorage.removeItem("inventoryList");
     }
   };
 
