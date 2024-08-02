@@ -5,7 +5,7 @@ import AddItemForm from "./components/AddItemForm";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { firestore } from "./firebase/firebase";
 import ItemCard from "./components/ItemCard";
-import { update } from "firebase/database";
+import Sort from "./components/Sort";
 
 const page = () => {
   const [inventoryList, setInventory] = React.useState([]);
@@ -33,9 +33,10 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center mt-32">
+    <div className="flex flex-col justify-center items-center mt-48">
       <AddItemForm update={updateInventory} itemList={inventoryList} />
-      <div className="mt-12">
+      <Sort update={updateInventory} />
+      <div className="mt-4">
         <div className="flex flex-col gap-3">
           {inventoryList.map((item) => (
             <ItemCard key={item} item={item} update={updateInventory} />

@@ -34,7 +34,7 @@ export default function AddItemForm({ update, itemList }) {
         await update();
         setError(null);
         handleClose();
-        // localStorage.removeItem("inventoryList");
+        localStorage.removeItem("inventoryList");
     }
   };
 
@@ -83,7 +83,7 @@ export default function AddItemForm({ update, itemList }) {
             margin="dense"
             id="itemName"
             name="itemName"
-            label="Item Name"
+            label="Item name"
             type="text"
             fullWidth
             variant="standard"
