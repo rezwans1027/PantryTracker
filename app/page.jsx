@@ -10,9 +10,33 @@ import Sort from "./components/Sort";
 const page = () => {
   const [inventoryList, setInventory] = React.useState([]);
 
-  const updateInventory = async () => {
-    const snapshot = query(collection(firestore, "items"), orderBy("name", "asc"));
-    const docs = await getDocs(snapshot);
+  const updateInventory = async (sortValue = "") => {
+    let querySnapshot;
+    
+    switch (sortValue) {
+      case "az":
+        querySnapshot = query(collection(firestore, "items"), orderBy("name", "asc"));
+        break;
+      case "za":
+        querySnapshot = query(collection(firestore, "items"), orderBy("name", "desc"));
+        break;
+      case "highest":
+        querySnapshot = query(collection(firestore, "items"), orderBy("quantity", "desc"));
+        break;
+      case "lowest":
+        querySnapshot = query(collection(firestore, "items"), orderBy("quantity", "asc"));
+        break;
+      case "recent":
+        querySnapshot = query(collection(firestore, "items"), orderBy("dateCreated", "desc"));
+        break;
+      case "early":
+        querySnapshot = query(collection(firestore, "items"), orderBy("dateCreated", "asc"));
+        break;
+      default:
+        querySnapshot = query(collection(firestore, "items"), orderBy("name", "asc"));
+    }
+
+    const docs = await getDocs(querySnapshot);
     const itemsList = [];
     docs.forEach((doc) => {
       itemsList.push({ name: doc.id, ...doc.data() });
@@ -22,12 +46,12 @@ const page = () => {
   };
 
   React.useEffect(() => {
-    const cachedItems = localStorage.getItem("inventoryList");
-    if (cachedItems) {
-      setInventory(JSON.parse(cachedItems));
-    } else {
-      updateInventory();
-    }
+    // const cachedItems = localStorage.getItem("inventoryList");
+    // if (cachedItems) {
+    //   setInventory(JSON.parse(cachedItems));
+    // } else {
+    //   updateInventory();
+    // }
 
     updateInventory();
   }, []);

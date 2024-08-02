@@ -23,7 +23,8 @@ export default function AddItemForm({ update, itemList }) {
   const itemNameList = itemList.map(item => item.name);
 
   const addItem = async (item, amount) => {
-    const docRef = doc(collection(firestore, "items"), item);
+    const formattedItem = item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
+    const docRef = doc(collection(firestore, "items"), formattedItem);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       // If the item already exists, don't add
@@ -98,6 +99,7 @@ export default function AddItemForm({ update, itemList }) {
             className="mt-4"
             onChange={(event, val) => setQuantity(Math.max(1, val))}
             min={1}
+            onKeyDown={(event) => {event.preventDefault();}}
           />
           {error && (
             <Typography color="error" className="mt-4">

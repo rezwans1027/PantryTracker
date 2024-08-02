@@ -3,17 +3,18 @@ import React from "react";
 
 const Sort = ({ update }) => {
 
-  const [sortValue, setSortValue] = React.useState("");
+  const [sortValue, setSortValue] = React.useState();
 
   const handleChange = async (event) => {
-    setSortValue(event.target.value);
-    console.log(event.target.value);
-    await update();
+    const newSortValue = event.target.value;
+    setSortValue(newSortValue);
+    console.log(newSortValue);
+    await update(newSortValue);
   };
 
   return (
     <div className="w-96 mt-8 flex justify-end">
-      <div>
+      <div className="min-w-24">
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Sort</InputLabel>
           <Select

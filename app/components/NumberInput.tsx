@@ -21,9 +21,11 @@ const NumberInput = React.forwardRef(function CustomNumberInput(
       slotProps={{
         incrementButton: {
           children: '▴',
+          type: 'button', // Ensure button type is set to 'button'
         },
         decrementButton: {
           children: '▾',
+          type: 'button', // Ensure button type is set to 'button'
         },
       }}
       {...props}
@@ -144,9 +146,9 @@ const StyledButton = styled('button')(
       color: ${grey[50]};
     }
 
-  border-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-  color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
+    border-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
+    background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
+    color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
   }
 
   &.${numberInputClasses.decrementButton} {
@@ -161,9 +163,9 @@ const StyledButton = styled('button')(
       color: ${grey[50]};
     }
 
-  border-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-  color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
+    border-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
+    background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
+    color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
   }
   & .arrow {
     transform: translateY(-1px);
