@@ -17,8 +17,8 @@ import { firestore } from "../firebase/firebase";
 
 export default function AddItemForm({ update, itemList }) {
   const [open, setOpen] = useState(false);
-  const [quantity, setQuantity] = useState<number | null>(1);
-  const [error, setError] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState(null);
 
   const itemNameList = itemList.map(item => item.name);
 
