@@ -58,10 +58,10 @@ export default function AddItemForm({ update, itemList }) {
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+          onSubmit: (events) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries((formData as any).entries());
+            const formJson = Object.fromEntries((formData  ).entries());
             const itemName = formJson.itemName;
             const itemQuantity = quantity;
 
