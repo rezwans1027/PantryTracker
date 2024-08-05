@@ -7,7 +7,7 @@ import { firestore } from "./firebase/firebase";
 import ItemCard from "./components/ItemCard";
 import Sort from "./components/Sort";
 
-const page = () => {
+const Page = () => {
   const [inventoryList, setInventory] = React.useState([]);
 
   const updateInventory = async (sortValue = "") => {
@@ -71,4 +71,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
